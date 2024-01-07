@@ -1,5 +1,5 @@
 package hashmap
 
-func Hash(name string) int {
+func Hash[T Hashable](name T) int {
 	return 5
 }

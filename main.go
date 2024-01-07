@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"gostl/hashmap"
-	linkedlist "gostl/linked_list"
 )
 
 func main() {
@@ -16,16 +15,21 @@ func main() {
 
 	hm := hashmap.NewHashMap[string, string](50)
 
-	fmt.Println(hm.Values[0])
+	hm.Put("bastien", "top")
 
-	ll := linkedlist.NewLinkedList[string]()
+	b, err1 := hm.Get("bastien")
+	if err1 != nil {
+		fmt.Printf("error 1 : %s\n", err1)
+	}
 
-	ll.Add("coucou")
-	el, tr := ll.Get("coucou")
-	ellll, fls := ll.Get("faux")
+	fmt.Println(b)
 
-	fmt.Printf("true : %t false : %t\n", tr, fls)
-	fmt.Println(el)
-	fmt.Println(ellll)
+	/*
+		m, err2 := hm.Get("misao")
+		if err2 != nil {
+			fmt.Printf("error 1 : %s\n", err1)
+		}
 
+		fmt.Println(m)
+	*/
 }
