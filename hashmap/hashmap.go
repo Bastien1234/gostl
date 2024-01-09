@@ -2,6 +2,7 @@ package hashmap
 
 import (
 	"errors"
+	"fmt"
 	linkedlist "gostl/linked_list"
 )
 
@@ -25,15 +26,27 @@ func NewHashMap[T Hashable, Z any](size int) *Hashmap[T, Z] {
 
 func (h *Hashmap[T, Z]) Put(key T, value Z) {
 	index := Hash(key)
-	h.Values[index].Add(value)
+
+	if h.Values[index] == nil {
+		ll := linkedlist.NewLinkedList[any]()
+		h.Values[index] = ll
+	}
 }
 
 func (h *Hashmap[T, Z]) Get(key T) (*Z, error) {
 	index := Hash(key)
-	el, ok := h.Values[index].Get(key)
-	if !ok {
-		return nil, errors.New("couldn't get the element")
+	if h.Values[index] == nil {
+		return nil, errors.New("element doesn't exists")
 	}
+	ll := h.Values[index]
+
+	fmt.Println(ll)
+
+	el, ok := ll.Get(key)
+	if !ok {
+		return nil, errors.New("c'est la merde")
+	}
+
 	casted, ok := el.(Z)
 	if !ok {
 		return nil, errors.New("couldn't case type")
